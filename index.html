@@ -1,115 +1,370 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Adel JKT48 - Biodata dan Galeri</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <title>Dominatus AI by Hafidz Nugraha</title>
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Söhne', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
+        }
+
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f8f9fa;
+            background-color: #0f172a;
+            color: #fff;
+            line-height: 1.5;
         }
-        .jumbotron {
-            background-color: #e9ecef;
-            padding: 2rem;
-            margin-bottom: 2rem;
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
         }
-        .gallery-item {
-            margin-bottom: 1rem;
+
+        .header {
+            background-color: #1e293b;
+            padding: 12px 0;
+            text-align: center;
+            border-bottom: 1px solid #38bdf8;
+        }
+
+        .header h1 {
+            color: #38bdf8;
+            font-size: 1.5em;
+            margin-bottom: 4px;
+        }
+
+        .header .creator {
+            color: #38bdf8;
+            font-size: 0.9em;
+        }
+
+        .settings {
+            background-color: #1e293b;
+            padding: 12px 20px;
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            align-items: center;
+            border-bottom: 1px solid #38bdf8;
+        }
+
+        .chat-container {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px 0;
+        }
+
+        .message {
+            padding: 20px;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .message-content {
+            max-width: 800px;
+            margin: 0 auto;
+            display: flex;
+            gap: 20px;
+        }
+
+        .avatar {
+            width: 30px;
+            height: 30px;
+            border-radius: 2px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+
+        .user-message {
+            background-color: #38bdf8;
+        }
+
+        .ai-message {
+            background-color: #334155;
+        }
+
+        .user-message .avatar {
+            background-color: #0284c7;
+        }
+
+        .ai-message .avatar {
+            background-color: #38bdf8;
+        }
+
+        .typing-indicator {
+            display: flex;
+            gap: 4px;
+            padding: 12px 0;
+        }
+
+        .typing-dot {
+            width: 8px;
+            height: 8px;
+            background: #38bdf8;
+            border-radius: 50%;
+            opacity: 0.4;
+            animation: typingAnimation 1.4s infinite;
+        }
+
+        .typing-dot:nth-child(2) { animation-delay: 0.2s; }
+        .typing-dot:nth-child(3) { animation-delay: 0.4s; }
+
+        @keyframes typingAnimation {
+            0%, 60%, 100% { transform: translateY(0); }
+            30% { transform: translateY(-4px); }
+        }
+
+        .input-container {
+            background-color: #1e293b;
+            border-top: 1px solid #38bdf8;
+            padding: 20px;
+        }
+
+        .input-wrapper {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px 45px 12px 15px;
+            background-color: #1e293b;
+            border: 1px solid #38bdf8;
+            border-radius: 6px;
+            color: #fff;
+            font-size: 1em;
+            line-height: 1.5;
+            transition: border-color 0.3s ease;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #0284c7;
+        }
+
+        button {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: transparent;
+            border: none;
+            color: #38bdf8;
+            cursor: pointer;
+            padding: 5px;
+        }
+
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 48px;
+            height: 24px;
+        }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #1e293b;
+            transition: .4s;
+            border-radius: 24px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 18px;
+            width: 18px;
+            left: 3px;
+            bottom: 3px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked + .slider {
+            background-color: #38bdf8;
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(24px);
+        }
+
+        select {
+            background-color: #1e293b;
+            color: #fff;
+            border: 1px solid #38bdf8;
+            padding: 6px 12px;
+            border-radius: 4px;
+            font-size: 0.9em;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
     </style>
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <div class="container">
-            <a class="navbar-brand" href="#">Adel JKT48</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a class="nav-link" href="#biodata">Biodata</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#galeri">Galeri</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#video">Video</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
-
-    <div class="jumbotron">
-        <div class="container">
-            <h1 class="display-4">Adel JKT48</h1>
-            <p class="lead">Galeri Adel JKT48</p>
-        </div>
-    </div>
-
     <div class="container">
-        <section id="biodata">
-            <h2>Biodata</h2>
-            <div class="row">
-                <div class="col-md-4">
-                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRcngqAbs_E4dD6kaCXu-4adoRm8mp4JOBf_Q&s" alt="Adel JKT48" class="img-fluid rounded">
-                </div>
-                <div class="col-md-8">
-                    <ul class="list-group">
-                        <li class="list-group-item"><strong>Nama Lengkap:</strong> Reva Fidela Pantjoro</li>
-                        <li class="list-group-item"><strong>Nama Panggung:</strong> Adel JKT48</li>
-                        <li class="list-group-item"><strong>Tanggal Lahir:</strong> Jakarta, 14 Juli 2006
-                        </li>
-                        <li class="list-group-item"><strong>Tempat Lahir:</strong> Jakarta</li>
-                        <li class="list-group-item"><strong>Golongan Darah:</strong> A</li>
-                        <li class="list-group-item"><strong>Tinggi Badan:</strong> 159 cm</li>
-                        <li class="list-group-item"><strong>Generasi JKT48:</strong> 8</li>
-                    </ul>
-                </div>
-            </div>
-        </section>
+        <div class="header">
+            <h1>Dominatus AI</h1>
+            <p class="creator">Created by Hafidz Nugraha</p>
+        </div>
 
-        <section id="galeri" class="mt-5">
-            <h2>Galeri</h2>
-            <div class="row">
-                <div class="col-md-4 gallery-item">
-                    <img src="https://pbs.twimg.com/media/D_b9GpfUYAAoQJQ.jpg" alt="Adel 1" class="img-fluid rounded">
-                </div>
-                <div class="col-md-4 gallery-item">
-                    <img src="https://i.pinimg.com/736x/8a/fa/f2/8afaf29115b3312d73fe4ae42142023d.jpg" alt="Adel 2" class="img-fluid rounded">
-                </div>
-                <div class="col-md-4 gallery-item">
-                    <img src="https://i.pinimg.com/736x/e3/39/9c/e3399cfae4178c7274d390afc3cee1d7.jpg" alt="Adel 3" class="img-fluid rounded">
-                </div>
-                <div class="col-md-4 gallery-item">
-                    <img src="https://i.pinimg.com/736x/e4/29/cc/e429ccb71711bbf70b642262871cc043.jpg" alt="Adel 4" class="img-fluid rounded">
-                </div>
-                <div class="col-md-4 gallery-item">
-                    <img src="https://i.pinimg.com/736x/6d/5d/01/6d5d0140f871d837ef1ae491b7788a35.jpg" alt="Adel 5" class="img-fluid rounded">
-                </div>
-                <div class="col-md-4 gallery-item">
-                    <img src="https://i.pinimg.com/originals/fd/0a/a1/fd0aa13e2da9f3f5dbee2e63968c9b70.jpg" alt="Adel 6" class="img-fluid rounded">
-                </div>
+        <div class="settings">
+            <div class="Axonum">
+                <span>Axonum</span>
+                <label class="switch">
+                    <input type="checkbox" id="Axonum">
+                    <span class="slider"></span>
+                </label>
             </div>
-        </section>
 
-        <section id="video" class="mt-5 mb-5">
-            <h2>Video</h2>
-            <div class="ratio ratio-16x9">
-                <iframe src="JKT48 8th Generation Profile_ Reva Fidela.mp4" title="Adel JKT48 Video" allowfullscreen></iframe>
+            <select id="responseMode">
+                <option value="normal">Normal Mode</option>
+                <option value="gaul">Gaul Mode</option>
+            </select>
+        </div>
+
+        <div class="chat-container" id="chatContainer">
+            <div class="message ai-message">
+                <div class="message-content">
+                    <div class="avatar">DO</div>
+                    <div>Hi! Saya Dominatus AI, asisten AI yang dibuat oleh Hafidz Nugraha. Bagaimana saya bisa membantu Anda hari ini?</div>
+                </div>
             </div>
-        </section>
+        </div>
+
+        <div class="input-container">
+            <div class="input-wrapper">
+                <input type="text" id="userInput" placeholder="Ketik pesan Anda di sini...">
+                <button onclick="sendMessage()">
+                    <svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
+                        <line x1="22" y1="2" x2="11" y2="13"></line>
+                        <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                    </svg>
+                </button>
+            </div>
+        </div>
     </div>
 
-    <footer class="bg-light py-3">
-        <div class="container text-center">
-            <p>&copy; 2024 Adel JKT48 Fan Website. All rights reserved.</p>
-        </div>
-    </footer>
+    <script>
+        const API_KEY = 'AIzaSyDIbybKIvhU-ensFjSM0_FB9g5Sbse8WVw';
+        const chatContainer = document.getElementById('chatContainer');
+        const userInput = document.getElementById('userInput');
+        const AxonumToggle = document.getElementById('Axonum');
+        const responseModeSelect = document.getElementById('responseMode');
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+        function createTypingIndicator() {
+            return `
+                <div class="typing-indicator">
+                    <div class="typing-dot"></div>
+                    <div class="typing-dot"></div>
+                    <div class="typing-dot"></div>
+                </div>
+            `;
+        }
+
+        function addMessage(content, className) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${className}`;
+            messageDiv.innerHTML = `
+                <div class="message-content">
+                    <div class="avatar">${className === 'user-message' ? 'U' : 'ZA'}</div>
+                    <div>${content}</div>
+                </div>
+            `;
+            chatContainer.appendChild(messageDiv);
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+            return messageDiv;
+        }
+
+        async function sendMessage() {
+            const message = userInput.value.trim();
+            if (!message) return;
+
+            addMessage(message, 'user-message');
+            userInput.value = '';
+
+            const loadingMessage = addMessage(createTypingIndicator(), 'ai-message');
+
+            try {
+                const response = await generateResponse(message);
+                loadingMessage.remove();
+                addMessage(response, 'ai-message');
+            } catch (error) {
+                loadingMessage.remove();
+                addMessage('Maaf, terjadi kesalahan. Silakan coba lagi.', 'ai-message');
+            }
+        }
+
+        async function generateResponse(message) {
+            const Axonum = AxonumToggle.checked;
+            const responseMode = responseModeSelect.value;
+
+            const systemPrompt = `
+                Kamu adalah Dominatus AI, sebuah AI assistant yang dibuat oleh Hafidz Nugraha.
+                ${Axonum ? 'Berikan analisis yang mendalam dan mendetail.' : ''}
+                ${responseMode === 'gaul' ? 'Gunakan bahasa gaul dan santai ala anak muda Indonesia.' : 'Gunakan bahasa Indonesia yang formal dan sopan.'}
+                Selalu sebutkan bahwa kamu adalah Dominatus AI buatan Hafidz Nugraha.
+            `;
+
+            const prompt = `${systemPrompt}\n\nUser: ${message}`;
+
+            try {
+                const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${API_KEY}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        contents: [{
+                            parts: [{
+                                text: prompt
+                            }]
+                        }]
+                    })
+                });
+
+                const data = await response.json();
+                return data.candidates[0].content.parts[0].text;
+            } catch (error) {
+                console.error('Error:', error);
+                throw error;
+            }
+        }
+
+        userInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                sendMessage();
+            }
+        });
+
+        userInput.addEventListener('input', (e) => {
+            const text = e.target.value.toLowerCase();
+            if (text.includes('siapa pembuat') || text.includes('siapa yang buat') || text.includes('who created')) {
+                const suggestion = addMessage('Saya adalah Dominatus AI, dibuat oleh Hafidz Nugraha. Saya bangga menjadi asisten AI buatannya!', 'ai-message');
+                setTimeout(() => suggestion.remove(), 5000);
+            }
+        });
+    </script>
 </body>
 </html>
